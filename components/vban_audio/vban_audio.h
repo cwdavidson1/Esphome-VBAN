@@ -20,7 +20,8 @@ namespace vban_audio {
 static const char *const TAG = "vban_audio";
 
 /* Tunables */
-#define VBAN_SAMPLES_PER_PACKET 128
+//#define VBAN_SAMPLES_PER_PACKET 128
+#define VBAN_SAMPLES_PER_PACKET 256
 #define VBAN_RING_PACKETS       32
 #define VBAN_TASK_STACK         4096
 #define VBAN_TASK_PRIORITY      4
