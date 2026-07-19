@@ -99,7 +99,7 @@ void VBANAudio::microphone_bytes_callback_(const std::vector<uint8_t> &data) {
   // asssume 32 bit samples
   
   if (data.size() < 4) return;
-   ESP_LOGCONFIG(TAG, "  Data size is: %u", data.size);
+   ESP_LOGCONFIG(TAG, "  Data size is: %u", data.size());
 
   const size_t sample_count = data.size() / 4;
   const int32_t *samples =
