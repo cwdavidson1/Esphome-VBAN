@@ -114,7 +114,7 @@ void VBANAudio::push_samples_(const int32_t *samples, size_t count) {
   while (count >= VBAN_SAMPLES_PER_PACKET) {
     for (size_t i = 0; i < VBAN_SAMPLES_PER_PACKET; i++) {
       int32_t s = static_cast<int32_t>(samples[i]);
-      s = >> 16;
+      s >>= 16;
       if (s > 32767) s = 32767;
       if (s < -32768) s = -32768;
       pkt.samples[i] = static_cast<int16_t>(s);
