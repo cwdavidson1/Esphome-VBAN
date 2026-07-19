@@ -59,7 +59,7 @@ class VBANAudio : public Component {
   void tx_loop_();
 
   void microphone_bytes_callback_(const std::vector<uint8_t> &data);
-  void push_samples_(const int16_t *samples, size_t count);
+  void push_samples_(const int32_t *samples, size_t count);
 
   uint8_t vban_sr_index_(uint32_t rate);
 

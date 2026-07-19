@@ -96,22 +96,25 @@ uint8_t VBANAudio::vban_sr_index_(uint32_t rate) {
 }
 
 void VBANAudio::microphone_bytes_callback_(const std::vector<uint8_t> &data) {
-  if (data.size() < 2)
-    return;
+  // asssume 32 bit samples
+  
+  if (data.size() < 4) return;
+   ESP_LOGCONFIG(TAG, "  Data size is: %u", data.size);
 
-  const size_t sample_count = data.size() / 2;
-  const int16_t *samples =
-      reinterpret_cast<const int16_t *>(data.data());
+  const size_t sample_count = data.size() / 4;
+  const int32_t *samples =
+      reinterpret_cast<const int32_t *>(data.data());
 
   push_samples_(samples, sample_count);
 }
 
-void VBANAudio::push_samples_(const int16_t *samples, size_t count) {
+void VBANAudio::push_samples_(const int32_t *samples, size_t count) {
   AudioPacket pkt;
 
   while (count >= VBAN_SAMPLES_PER_PACKET) {
     for (size_t i = 0; i < VBAN_SAMPLES_PER_PACKET; i++) {
-      int32_t s = static_cast<int32_t>(samples[i] * gain_);
+      int32_t s = static_cast<int32_t>(samples[i]);
+      s = >> 16;
       if (s > 32767) s = 32767;
       if (s < -32768) s = -32768;
       pkt.samples[i] = static_cast<int16_t>(s);
